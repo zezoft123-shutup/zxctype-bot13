@@ -5,7 +5,7 @@ import asyncio
 import os
 
 TELEGRAM_TOKEN = os.getenv("8453781858:AAFAWr37co76pPS21PxT8ADbcqJ9khP0Q8c")
-ANTHROPIC_KEY = os.getenv("sk-183cc7bf565999ad833e51a894a9254456b99a9f66df1d05")
+ANTHROPIC_KEY = os.getenv("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")
 
 client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
 bot = Bot(token=TELEGRAM_TOKEN)
