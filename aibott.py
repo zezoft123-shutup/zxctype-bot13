@@ -26,18 +26,11 @@ async def clear(msg: types.Message):
 @dp.message()
 async def handle(msg: types.Message):
     user_id = msg.from_user.id
-    
     if user_id not in memory:
         memory[user_id] = []
-    
-    memory[user_id].append({
-        "role": "user",
-        "content": msg.text
-    })
-    
+    memory[user_id].append({"role": "user", "content": msg.text})
     if len(memory[user_id]) > 20:
         memory[user_id] = memory[user_id][-20:]
-    
     try:
         response = client.messages.create(
             model="claude-sonnet-4-20250514",
@@ -45,16 +38,9 @@ async def handle(msg: types.Message):
             system="Ты полезный ассистент. Отвечай кратко и по делу.",
             messages=memory[user_id]
         )
-        
         answer = response.content[0].text
-        
-        memory[user_id].append({
-            "role": "assistant",
-            "content": answer
-        })
-        
+        memory[user_id].append({"role": "assistant", "content": answer})
         await msg.answer(answer)
-        
     except Exception as e:
         await msg.answer(f"❌ Ошибка: {str(e)}")
 
